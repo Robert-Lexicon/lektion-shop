@@ -1,4 +1,6 @@
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Image from "next/image";
+import Link from "next/link";
 
 interface Product {
   category: string;
@@ -20,14 +22,22 @@ export default async function Home() {
 
   console.log(data);
   return (
-    <ul className="grid">
+    <ul className="grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-4 my-8 mx-4">
       {data.map((product) => (
         <li key={product.id}>
-          <Card>
-            <CardHeader>
-              <CardTitle>{product.title}</CardTitle>
-            </CardHeader>
-          </Card>
+          <Link href={`/product/${product.id}`}>
+            <Card className="grid gap-4 h-full">
+              <CardHeader>
+                <CardTitle>
+                  <h3 className="font-semibold text-lg">{product.title}</h3>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Image src={product.image} height={100} width={100} alt="" />
+                <p>${product.price}</p>
+              </CardContent>
+            </Card>
+          </Link>
         </li>
       ))}
     </ul>
