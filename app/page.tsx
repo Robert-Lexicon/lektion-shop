@@ -1,25 +1,19 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
+import { fetchProductsByCategory } from "./actions";
 
-interface Product {
-  category: string;
-  description: string;
-  id: number;
-  image: string;
-  price: number;
-  title: string;
-  // rating: {
-  //   count: number;
-  //   rate: number;
-  // };
-}
+//todo make interface for searchParams
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  //const data = await fetchProducts();
+  //get category key/value from searchParams, if none, default to electronics
+  const { category = "electronics" } = await searchParams;
 
-export default async function Home() {
-  const res = await fetch("https://fakestoreapi.com/products");
-  //todo: check if data is ok
-  const data: Product[] = await res.json();
-
+  const data = await fetchProductsByCategory(category);
   console.log(data);
   return (
     <ul className="grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-4 my-8 mx-4">
