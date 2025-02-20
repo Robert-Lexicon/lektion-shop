@@ -1,7 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
-import { fetchProductsByCategory } from "./actions";
+import { fetchCategories, fetchProductsByCategory } from "./actions";
+import CategorySelect from "@/components/navigation/category-select";
+import Ratings from "@/components/ui/ratings";
 
 //todo make interface for searchParams
 export default async function Home({
@@ -14,26 +16,37 @@ export default async function Home({
   const { category = "electronics" } = await searchParams;
 
   const data = await fetchProductsByCategory(category);
+  const categories = fetchCategories();
   console.log(data);
   return (
-    <ul className="grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-4 my-8 mx-4">
-      {data.map((product) => (
-        <li key={product.id}>
-          <Link href={`/product/${product.id}`}>
-            <Card className="grid gap-4 h-full">
-              <CardHeader>
-                <CardTitle>
-                  <h3 className="font-semibold text-lg">{product.title}</h3>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Image src={product.image} height={100} width={100} alt="" />
-                <p>${product.price}</p>
-              </CardContent>
-            </Card>
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <main className="space-y-4">
+      <CategorySelect categories={categories} />
+      <ul className="grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-4">
+        {data.map((product) => (
+          <li key={product.id}>
+            <Link href={`/product/${product.id}`}>
+              <Card className="grid  h-full">
+                <CardHeader className="grid justify-items-center text-center space-y-4">
+                  <Image
+                    className="w-full max-w-[12rem] max-h-[200px] object-contain"
+                    src={product.image}
+                    height={100}
+                    width={100}
+                    alt=""
+                  />
+                  <Ratings rating={product.rating.rate} />
+                  <CardTitle>
+                    <h3 className="font-semibold text-lg">{product.title}</h3>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="text-center">
+                  <p className="text-xl font-semibold">${product.price}</p>
+                </CardContent>
+              </Card>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </main>
   );
 }
