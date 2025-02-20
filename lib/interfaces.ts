@@ -5,8 +5,8 @@ export interface Product {
     image: string;
     price: number;
     title: string;
-    // rating: {
-    //   count: number;
-    //   rate: number;
-    // };
+    rating: {
+      count: number;
+      rate: number;
+    };
   }
