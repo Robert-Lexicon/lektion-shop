@@ -11,9 +11,9 @@ export const fetchProducts = async () => {
 }
 
 export const fetchProductsByCategory = async (category: string | string[]) => {
-    //todo handle array
+    //TODO: handle array
     const res = await fetch(`https://fakestoreapi.com/products/category/${category}`);
-    //todo: check if data is ok
+    //TODO: check if data is ok
 
     const data: Product[] = await res.json();
     return data
@@ -23,7 +23,7 @@ export const fetchProductsByCategory = async (category: string | string[]) => {
 //"vanlig" function, spelar ingen roll för funktion men kan vara bra göra skillnad på
 export async function fetchProduct(id: string) {
     const res = await fetch(`https://fakestoreapi.com/products/${id}`);
-    //todo: check if data is ok
+    //TODO: check if data is ok
     const data: Product = await res.json();
     return data;
 }
