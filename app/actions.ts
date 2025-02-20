@@ -27,3 +27,11 @@ export async function fetchProduct(id: string) {
     const data: Product = await res.json();
     return data;
 }
+
+export async function fetchCategories() {
+    const res = await fetch(`https://fakestoreapi.com/products/categories`);
+    //TODO: check if data is ok
+    const data: string[] = await res.json();
+    return data;
+}
+
