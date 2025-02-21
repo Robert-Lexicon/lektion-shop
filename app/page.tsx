@@ -8,7 +8,9 @@ import { Suspense } from "react";
 
 //different loader icons
 //TODO: make them look a bit better, show when selecting category
-const LoadingSpinner = () => <LoaderCircle className="animate-spin size-16 " />;
+const LoadingSpinner = () => (
+  <LoaderCircle className="animate-spin size-16 mx-auto my-32" />
+);
 const LoadingSelect = () => (
   <div>
     Category: <Skeleton className="w-[180px] h-9" />
