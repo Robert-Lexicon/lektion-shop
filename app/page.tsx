@@ -1,8 +1,16 @@
 import { fetchCategories, fetchProductsByCategory } from "./actions";
 import CategorySelect from "@/components/navigation/category-select";
 import { Products } from "@/components/products";
+import { Skeleton } from "@/components/ui/skeleton";
+import { LoaderCircle } from "lucide-react";
 import { Suspense } from "react";
 
+const LoadingSpinner = () => <LoaderCircle className="animate-spin size-16 " />;
+const LoadingSelect = () => (
+  <div>
+    Category: <Skeleton className="w-[180px] h-9" />
+  </div>
+);
 //todo make interface for searchParams
 export default async function Home({
   searchParams,
@@ -18,10 +26,10 @@ export default async function Home({
 
   return (
     <main className="space-y-4 container mx-auto">
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingSelect />}>
         <CategorySelect categories={categories} />
       </Suspense>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingSpinner />}>
         <Products products={products} />
       </Suspense>
     </main>
