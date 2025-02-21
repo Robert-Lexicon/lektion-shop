@@ -37,7 +37,10 @@ export default async function Home({
         </Suspense>
         <SortingSelect />
       </div>
-      <Suspense fallback={<LoadingSpinner />}>
+      <Suspense
+        key={category.toString() + sort.toString()}
+        fallback={<LoadingSpinner />}
+      >
         <Products products={products} />
       </Suspense>
     </main>
