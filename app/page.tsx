@@ -17,7 +17,7 @@ export default async function Home({
   const categories = fetchCategories();
 
   return (
-    <main className="space-y-4">
+    <main className="space-y-4 container mx-auto">
       <Suspense fallback={<div>Loading...</div>}>
         <CategorySelect categories={categories} />
       </Suspense>

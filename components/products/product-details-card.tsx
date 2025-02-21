@@ -16,7 +16,7 @@ export async function ProductDetailsCard({
 }) {
   const productDetails = await product;
   return (
-    <Card>
+    <Card className=" max-w-[120ch] mx-auto">
       <CardHeader className="text-center">
         <CardTitle>
           <h1 className="font-bold text-xl">{productDetails.title}</h1>
@@ -25,13 +25,15 @@ export async function ProductDetailsCard({
       </CardHeader>
 
       <CardContent className="space-y-4 grid grid-cols-2">
-        <Image
-          className="w-full max-w-[260px] px-4 object-contain"
-          src={productDetails.image}
-          height={100}
-          width={100}
-          alt=""
-        />
+        <div className="flex justify-center">
+          <Image
+            className="w-full max-w-[260px] px-4 object-contain"
+            src={productDetails.image}
+            height={100}
+            width={100}
+            alt=""
+          />
+        </div>
         <div className="grid gap-2 px-4">
           <div className="flex gap-2 items-center">
             <span>Rating:</span> <Ratings rating={productDetails.rating.rate} />
