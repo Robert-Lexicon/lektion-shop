@@ -2,6 +2,10 @@
 //so that we are sure nothing gets sent to the client
 import { Product } from "@/lib/interfaces";
 
+// function delay(ms:number) {
+//     return new Promise(resolve => setTimeout(resolve, ms));
+//   }
+
 //arrow function 
 export const fetchProducts = async () => {
     const res = await fetch("https://fakestoreapi.com/products");
@@ -10,9 +14,10 @@ export const fetchProducts = async () => {
     return data
 }
 
-export const fetchProductsByCategory = async (category: string | string[]) => {
+export const fetchProductsByCategory = async (category: string | string[], sort : string | string[]) => {
     //TODO: handle array
-    const res = await fetch(`https://fakestoreapi.com/products/category/${category}`);
+    //await delay(5000); // Wait for 5 seconds;
+    const res = await fetch(`https://fakestoreapi.com/products/category/${category}?sort=${sort}`);
     //TODO: check if data is ok
 
     const data: Product[] = await res.json();
@@ -31,6 +36,7 @@ export async function fetchProduct(id: string) {
 export async function fetchCategories() {
     const res = await fetch(`https://fakestoreapi.com/products/categories`);
     //TODO: check if data is ok
+    //await delay(5000); // Wait for 5 seconds;
     const data: string[] = await res.json();
     return data;
 }

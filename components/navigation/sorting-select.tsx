@@ -1,5 +1,5 @@
 "use client";
-import { use, useCallback } from "react";
+import { useCallback } from "react";
 import { Label } from "../ui/label";
 import {
   Select,
@@ -10,47 +10,42 @@ import {
 } from "../ui/select";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export default function CategorySelect({
-  categories,
-}: {
-  categories: Promise<string[]>;
-}) {
+export default function SortingSelect() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const allCategories = use(categories);
-
   //https://react.dev/reference/react/useCallback
   const createQueryString = useCallback(
     (name: string, value: string) => {
+      //use the old search params as base for making the new ones
       const newSearchParams = new URLSearchParams(searchParams.toString());
+      //add our new value to the key/value pair
       newSearchParams.set(name, value);
+
       return newSearchParams.toString();
     },
     [searchParams]
   );
 
-  const currentCategory = searchParams.get("category") ?? allCategories[0];
+  //get the sort value from searchParams and default to asc
+  const currentCategory = searchParams.get("sort") ?? "asc";
 
+  //this is called when we change value in the drop down
   function handleChange(value: string): void {
-    //TODO: add so the current search params isn't overwritten
-    router.push(`${pathname}?${createQueryString("category", value)}`);
+    router.push(`${pathname}?${createQueryString("sort", value)}`);
   }
 
   return (
     <div>
-      <Label htmlFor="categorySelect">Category: </Label>
+      <Label htmlFor="sortingSelect">Sort by price: </Label>
       <Select defaultValue={currentCategory} onValueChange={handleChange}>
-        <SelectTrigger id="categorySelect" className="w-[180px]">
-          <SelectValue placeholder="Category" />
+        <SelectTrigger id="sortingSelect" className="w-[180px]">
+          <SelectValue placeholder="Sorting" />
         </SelectTrigger>
         <SelectContent>
-          {allCategories.map((category, index) => (
-            <SelectItem key={index} value={category}>
-              <span className="capitalize">{category}</span>
-            </SelectItem>
-          ))}
+          <SelectItem value={"asc"}>Ascending</SelectItem>
+          <SelectItem value={"desc"}>Descending</SelectItem>
         </SelectContent>
       </Select>
     </div>
