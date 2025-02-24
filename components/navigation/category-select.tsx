@@ -13,13 +13,19 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 export default function CategorySelect({
   categories,
 }: {
-  categories: Promise<string[]>;
+  categories: Promise<string[] | { error: string }>;
 }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const allCategories = use(categories);
+
+  //check if there is an error message or if the length of the categories is/less than 0 if so throw an error
+  //if there are no categories something is probably wrong with the api anyway...
+  if ("error" in allCategories || allCategories.length <= 0) {
+    throw new Error("No categories found");
+  }
 
   //https://react.dev/reference/react/useCallback
   const createQueryString = useCallback(
@@ -31,10 +37,10 @@ export default function CategorySelect({
     [searchParams]
   );
 
+  //TODO: here we should also check to see if the chosen category is in the list of categories, if not set to undefined and let the user chose
   const currentCategory = searchParams.get("category") ?? allCategories[0];
 
   function handleChange(value: string): void {
-    //TODO: add so the current search params isn't overwritten
     router.push(`${pathname}?${createQueryString("category", value)}`);
   }
 
@@ -43,7 +49,7 @@ export default function CategorySelect({
       <Label htmlFor="categorySelect">Category: </Label>
       <Select defaultValue={currentCategory} onValueChange={handleChange}>
         <SelectTrigger id="categorySelect" className="w-[180px]">
-          <SelectValue placeholder="Category" />
+          <SelectValue placeholder="Select Category" />
         </SelectTrigger>
         <SelectContent>
           {allCategories.map((category, index) => (
