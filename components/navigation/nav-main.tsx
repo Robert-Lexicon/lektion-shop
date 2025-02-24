@@ -22,6 +22,13 @@ export default function NavMain() {
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
+          <Link href="/pokemon" legacyBehavior passHref>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              Pokemon
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
           <Link href="/about" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               About
