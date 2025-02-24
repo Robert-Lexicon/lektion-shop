@@ -1,9 +1,10 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:is(.dark *));
+
 body {
   font-family: var(--font-quicksand);
 }
-
 
 :root {
   --background: hsl(0 0% 100%);
@@ -65,7 +66,6 @@ body {
     --chart-5: hsl(340 75% 55%);
   }
 }
-
 
 @theme inline {
   --color-background: var(--background);
