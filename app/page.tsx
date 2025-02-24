@@ -24,7 +24,7 @@ export default async function Home({
 }) {
   //const data = await fetchProducts();
   //get category key/value from searchParams, if none, default to electronics
-  const { category = "electronics", sort = "asc" } = await searchParams;
+  const { category, sort = "asc" } = await searchParams;
 
   //fetch but don't await here, do the waiting inside the component
   // and use suspense with fallback to show loading animation
@@ -40,7 +40,7 @@ export default async function Home({
         <SortingSelect />
       </div>
       <Suspense
-        key={category.toString() + sort.toString()}
+        key={category?.toString() + sort.toString()}
         fallback={<LoadingSpinner />}
       >
         <Products products={products} />

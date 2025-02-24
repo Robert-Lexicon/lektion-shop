@@ -37,8 +37,15 @@ export default function CategorySelect({
     [searchParams]
   );
 
-  //TODO: here we should also check to see if the chosen category is in the list of categories, if not set to undefined and let the user chose
-  const currentCategory = searchParams.get("category") ?? allCategories[0];
+  //this works but will not select anything if the category in the url is wrong
+  //const currentCategory = searchParams.get("category") ?? allCategories[0];
+
+  //check to see if the chosen category is in the list of categories, if not set to undefined and let the user chose
+  const categoryFromSearch = searchParams.get("category");
+  const currentCategory =
+    categoryFromSearch && allCategories.includes(categoryFromSearch)
+      ? categoryFromSearch
+      : undefined;
 
   function handleChange(value: string): void {
     router.push(`${pathname}?${createQueryString("category", value)}`);
@@ -52,6 +59,9 @@ export default function CategorySelect({
           <SelectValue placeholder="Select Category" />
         </SelectTrigger>
         <SelectContent>
+          <SelectItem value="All">
+            <span className="capitalize">All</span>
+          </SelectItem>
           {allCategories.map((category, index) => (
             <SelectItem key={index} value={category}>
               <span className="capitalize">{category}</span>

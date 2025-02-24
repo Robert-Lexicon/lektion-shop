@@ -17,14 +17,23 @@ export const fetchProducts = async () => {
 };
 
 export const fetchProductsByCategory = async (
-  category: string | string[],
+  category: string | string[] | undefined,
   sort: string | string[]
 ) => {
   //TODO: handle array
-  //await delay(5000); // Wait for 5 seconds;
-  const res = await fetch(
-    `https://fakestoreapi.com/products/category/${category}?sort=${sort}`
-  );
+
+  //if category is undefined or "All" instead fetch all products
+  let res;
+  if (!category || category === "All") {
+    res = await fetch(`https://fakestoreapi.com/products/?sort=${sort}`);
+    console.log(res);
+  } else {
+    res = await fetch(
+      `https://fakestoreapi.com/products/category/${category}?sort=${sort}`
+    );
+  }
+
+  //TODO: more checks to see if the data is good, like handle empty response body and so on
   if (!res.ok) throw new Error("error");
 
   const data: Product[] = await res.json();
@@ -34,7 +43,6 @@ export const fetchProductsByCategory = async (
 //"vanlig" function, spelar ingen roll för funktion men kan vara bra göra skillnad på
 export async function fetchProduct(id: string) {
   const res = await fetch(`https://fakestoreapi.com/products/${id}`);
-  //TODO: check if data is ok
 
   //if not in a try catch it will bubble up to the page that calls this function
   //we can also check against res.status (200=ok) and so on
