@@ -6,7 +6,7 @@ import { parseQueryParam } from "@/lib/utils";
 import { Metadata } from "next";
 import Link from "next/link";
 
-export const POKEAPI_URL = "https://pokeapi.co/api/v2/";
+const POKEAPI_URL = "https://pokeapi.co/api/v2/";
 
 export const metadata: Metadata = {
   title: "Pokemon listing",

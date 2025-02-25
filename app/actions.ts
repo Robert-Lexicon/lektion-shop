@@ -26,7 +26,6 @@ export const fetchProductsByCategory = async (
   let res;
   if (!category || category === "All") {
     res = await fetch(`https://fakestoreapi.com/products/?sort=${sort}`);
-    console.log(res);
   } else {
     res = await fetch(
       `https://fakestoreapi.com/products/category/${category}?sort=${sort}`
