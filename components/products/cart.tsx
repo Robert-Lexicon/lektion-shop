@@ -9,6 +9,8 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Cart() {
   const { cart, cartTotal, cartCount } = useCart();
@@ -22,25 +24,45 @@ export default function Cart() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="">Product</TableHead>
-              <TableHead className="w-[100px]">Price/Item</TableHead>
-              <TableHead className="w-[100px] text-right">Quantity</TableHead>
+              <TableHead>Product</TableHead>
+              <TableHead></TableHead>
+              <TableHead className="max-w-[100px]">Price</TableHead>
+              <TableHead className="max-w-[100px]">Qty</TableHead>
+              <TableHead className="w-[100px] text-right">Subtotal</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {cart.map((item) => (
               <TableRow key={item.product.id}>
+                <TableCell className="w-[60px]">
+                  <Image
+                    src={item.product.image}
+                    height={40}
+                    width={40}
+                    alt=""
+                  />
+                </TableCell>
                 <TableCell className="font-medium">
-                  {item.product.title}
+                  <Link href={`/product/${item.product.id}`}>
+                    {item.product.title}
+                  </Link>
                 </TableCell>
                 <TableCell>${item.product.price}</TableCell>
-                <TableCell className="text-right">{item.quantity}</TableCell>
+                <TableCell>{item.quantity}</TableCell>
+                <TableCell className="text-right">
+                  ${item.quantity * item.product.price}
+                </TableCell>
               </TableRow>
             ))}
             <TableRow>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
               <TableCell className="font-bold text-right">Total:</TableCell>
-              <TableCell>${cartTotal}</TableCell>
-              <TableCell className="text-right"> {cartCount}</TableCell>
+
+              <TableCell>{cartCount}</TableCell>
+              <TableCell className="text-right">
+                ${cartTotal.toFixed(2)}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>
