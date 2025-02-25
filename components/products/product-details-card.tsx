@@ -3,11 +3,13 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "../ui/card";
 import Ratings from "../ui/ratings";
 import Image from "next/image";
+import AddToCartButton from "./addtocart-button";
 
 export async function ProductDetailsCard({
   product,
@@ -44,6 +46,9 @@ export async function ProductDetailsCard({
           </p>
         </div>
       </CardContent>
+      <CardFooter className="flex justify-end">
+        <AddToCartButton product={productDetails} />
+      </CardFooter>
     </Card>
   );
 }
