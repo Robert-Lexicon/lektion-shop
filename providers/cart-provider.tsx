@@ -12,6 +12,7 @@ type CartItem = {
 type CartContextType = {
   cart: CartItem[];
   addToCart: (product: Product) => void;
+  removeFromCart: (id: number) => void;
   cartTotal: number;
   cartCount: number;
 };
@@ -51,6 +52,18 @@ export default function CartProvider({
     });
   }
 
+  function removeFromCart(id: number) {
+    setCart((prevCart) => {
+      return prevCart
+        .map((item) =>
+          item.product.id === id
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        )
+        .filter((item) => item.quantity > 0);
+    });
+  }
+
   //make the total amount of items in the cart available
   const cartCount = cart.reduce((count, item) => count + item.quantity, 0);
 
@@ -62,7 +75,9 @@ export default function CartProvider({
 
   //return our context to be used
   return (
-    <CartContext.Provider value={{ cart, addToCart, cartTotal, cartCount }}>
+    <CartContext.Provider
+      value={{ cart, addToCart, cartTotal, cartCount, removeFromCart }}
+    >
       {children}
     </CartContext.Provider>
   );

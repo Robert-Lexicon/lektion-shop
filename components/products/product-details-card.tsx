@@ -10,6 +10,7 @@ import {
 import Ratings from "../ui/ratings";
 import Image from "next/image";
 import AddToCartButton from "./addtocart-button";
+import { ShoppingBasket } from "lucide-react";
 
 export async function ProductDetailsCard({
   product,
@@ -47,7 +48,9 @@ export async function ProductDetailsCard({
         </div>
       </CardContent>
       <CardFooter className="flex justify-end">
-        <AddToCartButton product={productDetails} />
+        <AddToCartButton className="bg-red-500" product={productDetails}>
+          <ShoppingBasket /> Add to cart
+        </AddToCartButton>
       </CardFooter>
     </Card>
   );
